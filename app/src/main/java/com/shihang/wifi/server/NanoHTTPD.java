@@ -469,13 +469,12 @@ public abstract class NanoHTTPD {
 	 * response.
 	 */
 	protected class HTTPSession implements Runnable {
-		public static final int BUFSIZE = 8192;
+				public static final int BUFSIZE = 8192;
 		private final TempFileManager tempFileManager;
 		private InputStream inputStream;
 		private OutputStream outputStream;
 
-		public HTTPSession(TempFileManager tempFileManager,
-				InputStream inputStream, OutputStream outputStream) {
+		public HTTPSession(TempFileManager tempFileManager, InputStream inputStream, OutputStream outputStream) {
 			this.tempFileManager = tempFileManager;
 			this.inputStream = inputStream;
 			this.outputStream = outputStream;
