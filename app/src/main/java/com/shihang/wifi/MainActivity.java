@@ -9,13 +9,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 import com.shihang.wifi.server.WifiTransmissionManager;
+import com.shihang.wifi.server.WifiTransmissionManager.TransmissionResultListener;
 import com.shihang.wifi.server.HtmlConst;
 import com.shihang.wifi.util.FileAccessUtil;
+import com.shihang.wifi.util.TShow;
 
 
 public class MainActivity extends AppCompatActivity {
 
     TextView ipStr;
+
+    private TransmissionResultListener resultListener = new TransmissionResultListener() {
+        @Override
+        public void transmissionResult(boolean success, String filePath, String msg) {
+            if(success){
+                TShow.showShort(MainActivity.this, msg);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
+
+        WifiTransmissionManager.addListener(resultListener);
+
         ipStr = (TextView) findViewById(R.id.ipStr);
 
         HtmlConst.DIR_NAME = FileAccessUtil.createDir(HtmlConst.DIR_NAME);
@@ -52,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         WifiTransmissionManager.stopServer();
+        WifiTransmissionManager.removeListener(resultListener);
     }
 
     @Override
