@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">WiFiTest</string>
+    <string name="action_settings">Settings</string>
+</resources>
